@@ -10,7 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DetailsActivity"></activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".AllPlacesActivity"></activity>
+
+        <activity android:name=".RegisterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,56 @@
+{
+  "places": {
+    "place1": {
+      "id": "place1",
+      "name": "Eiffel Tower",
+      "startingPrice": "$100",
+      "country": "France",
+      "image": "https://example.com/eiffel.jpg",
+      "additionalImages": [
+        "https://example.com/eiffel1.jpg",
+        "https://example.com/eiffel2.jpg"
+      ],
+      "availableFlight": "2025-03-15",
+      "description": "The Eiffel Tower is one of the most iconic structures in the world."
+    },
+    "place2": {
+      "id": "place2",
+      "name": "Great Wall of China",
+      "startingPrice": "$200",
+      "country": "China",
+      "image": "https://example.com/greatwall.jpg",
+      "additionalImages": [
+        "https://example.com/greatwall1.jpg",
+        "https://example.com/greatwall2.jpg"
+      ],
+      "availableFlight": "2025-05-10",
+      "description": "The Great Wall of China stretches over 13,000 miles."
+    },
+    "place3": {
+      "id": "place3",
+      "name": "Statue of Liberty",
+      "startingPrice": "$150",
+      "country": "USA",
+      "image": "https://example.com/statueofliberty.jpg",
+      "additionalImages": [
+        "https://example.com/statue1.jpg",
+        "https://example.com/statue2.jpg"
+      ],
+      "availableFlight": "2025-04-20",
+      "description": "The Statue of Liberty is a symbol of freedom and democracy."
+    },
+    "place4": {
+      "id": "place4",
+      "name": "Taj Mahal",
+      "startingPrice": "$180",
+      "country": "India",
+      "image": "https://example.com/tajmahal.jpg",
+      "additionalImages": [
+        "https://example.com/taj1.jpg",
+        "https://example.com/taj2.jpg"
+      ],
+      "availableFlight": "2025-06-12",
+      "description": "The Taj Mahal is one of the seven wonders of the world."
+    }
+  }
+}

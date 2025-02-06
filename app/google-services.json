@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1009928436633",
+    "project_id": "maher-uni-project",
+    "storage_bucket": "maher-uni-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009928436633:android:fc5599828f1467823eb108",
+        "android_client_info": {
+          "package_name": "com.example.myproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaqhxzu13iAJgJn54RHT4q9jVUsdsQY1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

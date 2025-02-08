@@ -174,6 +174,11 @@ public class MainActivity extends AppCompatActivity {
         allPlaces.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, AllPlacesActivity.class));
         });
+
+        ImageView favoritesBookings = findViewById(R.id.navigate_to_favorites_bookings);
+        favoritesBookings.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, FavoritesBookingsActivity.class));
+        });
     }
 
     private void fetchPlaces() {

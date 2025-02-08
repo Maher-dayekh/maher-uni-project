@@ -159,6 +159,7 @@
             app:srcCompat="@drawable/flights" />
 
         <ImageView
+            android:id="@+id/navigate_to_favorites_bookings"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"

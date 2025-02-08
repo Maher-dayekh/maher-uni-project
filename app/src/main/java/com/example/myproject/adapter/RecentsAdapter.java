@@ -48,6 +48,7 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.RecentsV
 
         holder.itemView.setOnClickListener(view -> {
             Intent i = new Intent(context, DetailsActivity.class);
+            i.putExtra("place_id", place.getId()); // 🔹 Ensure place ID is passed
             i.putExtra("place_name", place.getName());
             i.putExtra("country_name", place.getCountry());
             i.putExtra("price", place.getStartingPrice());

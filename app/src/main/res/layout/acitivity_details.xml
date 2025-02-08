@@ -132,9 +132,8 @@
             app:layout_constraintTop_toBottomOf="@id/textView12"
             android:orientation="horizontal"/>
 
-
         <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/favorite_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -153,10 +152,10 @@
         android:fontFamily="@font/rubik"
         android:text="Start Booking Your Trip"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+        app:layout_constraintBottom_toBottomOf="@+id/favorite_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toTopOf="@+id/imageView11" />
+        app:layout_constraintStart_toEndOf="@+id/favorite_button"
+        app:layout_constraintTop_toTopOf="@+id/favorite_button" />
 
     <TextView
         android:id="@+id/textView13"

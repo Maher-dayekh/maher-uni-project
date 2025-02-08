@@ -22,7 +22,7 @@ import java.net.URL;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView userName, userEmail;
-    private ImageView userProfileImage, backArrow;
+    private ImageView userProfileImage;
     private Button editProfileButton, logoutButton;
     private FirebaseAuth mAuth;
 
@@ -36,7 +36,6 @@ public class ProfileActivity extends AppCompatActivity {
         userProfileImage = findViewById(R.id.user_profile_image);
         editProfileButton = findViewById(R.id.edit_profile_button);
         logoutButton = findViewById(R.id.logout_button);
-        backArrow = findViewById(R.id.backArrow);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -70,8 +69,19 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(ProfileActivity.this, "Edit Profile Coming Soon!", Toast.LENGTH_SHORT).show();
         });
 
-        backArrow.setOnClickListener(view -> {
+        ImageView main = findViewById(R.id.navigate_to_home);
+        main.setOnClickListener(v -> {
             startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+        });
+
+        ImageView allPlaces = findViewById(R.id.navigate_to_places);
+        allPlaces.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, AllPlacesActivity.class));
+        });
+
+        ImageView favoritesBookings = findViewById(R.id.navigate_to_favorites_bookings);
+        favoritesBookings.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, FavoritesBookingsActivity.class));
         });
     }
 

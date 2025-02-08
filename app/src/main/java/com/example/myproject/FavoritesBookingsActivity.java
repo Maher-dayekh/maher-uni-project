@@ -1,7 +1,10 @@
 package com.example.myproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,6 +65,8 @@ public class FavoritesBookingsActivity extends AppCompatActivity {
         loadFavorites();
         loadBookings();
 
+        System.out.println("favs"+ favoritesList);
+        System.out.println("bookings"+ bookingsList);
         // Handle tab switching
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -81,6 +86,21 @@ public class FavoritesBookingsActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+        ImageView profileImage = findViewById(R.id.navigate_to_profile);
+        profileImage.setOnClickListener(v -> {
+            startActivity(new Intent(FavoritesBookingsActivity.this, ProfileActivity.class));
+        });
+
+        ImageView allPlaces = findViewById(R.id.navigate_to_places);
+        allPlaces.setOnClickListener(v -> {
+            startActivity(new Intent(FavoritesBookingsActivity.this, AllPlacesActivity.class));
+        });
+
+        ImageView home = findViewById(R.id.navigate_to_main);
+        home.setOnClickListener(v -> {
+            startActivity(new Intent(FavoritesBookingsActivity.this, MainActivity.class));
         });
     }
 

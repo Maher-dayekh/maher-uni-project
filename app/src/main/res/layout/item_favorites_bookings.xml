@@ -9,19 +9,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/place_image"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"/>
+            android:layout_height="129dp"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="10dp">
 
@@ -29,31 +29,35 @@
                 android:id="@+id/place_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Place Name"
                 android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:text="Place Name"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:text="Country"/>
+                android:text="Country" />
 
             <TextView
                 android:id="@+id/starting_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@android:color/holo_blue_dark"
-                android:text="Starting Price"/>
+                android:text="Price" />
+
+            <TextView
+                android:id="@+id/available_flight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Flight" />
 
             <Button
                 android:id="@+id/view_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View"/>
+                android:text="View" />
+
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -2,6 +2,7 @@ package com.example.myproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myproject.DetailsActivity;
 import com.example.myproject.R;
 import com.example.myproject.model.Place;
+import com.example.myproject.utils.ImageLoader;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesBookingsAdapter extends RecyclerView.Adapter<FavoritesBookingsAdapter.ViewHolder> {
@@ -34,15 +38,41 @@ public class FavoritesBookingsAdapter extends RecyclerView.Adapter<FavoritesBook
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Place place = placeList.get(position);
+        Log.d("FavoritesAdapter", "Binding place: " + place.getName());
+        Log.d("FavoritesAdapter", "Country: " + place.getCountry());
+        Log.d("FavoritesAdapter", "Price: " + place.getStartingPrice());
+        Log.d("FavoritesAdapter", "Available Flight: " + place.getAvailableFlight());
+        Log.d("FavoritesAdapter", "id: " + place.getId());
+        Log.d("FavoritesAdapter", "image: " + place.getImage());
+        Log.d("FavoritesAdapter", "Available Flight: " + place.getAvailableFlight());
 
         if (place != null) {
+
+            // Ensure data is correctly displayed
             holder.placeName.setText(place.getName());
             holder.country.setText(place.getCountry());
-            holder.price.setText(place.getStartingPrice());
+            holder.startingPrice.setText("Price: " + place.getStartingPrice());
+            holder.availableFlight.setText("Available Flight: " + place.getAvailableFlight());
 
+            // Load image without external libraries
+            ImageLoader.loadImage(context, holder.placeImage, place.getImage());
+
+            // Handle View Button Click
             holder.viewButton.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("place_id", place.getId());
+                intent.putExtra("place_name", place.getName());
+                intent.putExtra("country_name", place.getCountry());
+                intent.putExtra("price", place.getStartingPrice());
+                intent.putExtra("image", place.getImage());
+                intent.putExtra("available_flight", place.getAvailableFlight());
+                intent.putExtra("description", place.getDescription());
+                // Ensure additional images list is never null
+                if (place.getAdditionalImages() != null) {
+                    intent.putStringArrayListExtra("additional_images", new ArrayList<>(place.getAdditionalImages()));
+                } else {
+                    intent.putStringArrayListExtra("additional_images", new ArrayList<>()); // Empty list to prevent crash
+                }
                 context.startActivity(intent);
             });
         }
@@ -54,7 +84,7 @@ public class FavoritesBookingsAdapter extends RecyclerView.Adapter<FavoritesBook
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView placeName, country, price;
+        TextView placeName, country, startingPrice, availableFlight;
         Button viewButton;
         ImageView placeImage;
 
@@ -62,9 +92,10 @@ public class FavoritesBookingsAdapter extends RecyclerView.Adapter<FavoritesBook
             super(itemView);
             placeName = itemView.findViewById(R.id.place_name);
             country = itemView.findViewById(R.id.country);
-            price = itemView.findViewById(R.id.starting_price);
-            viewButton = itemView.findViewById(R.id.view_button);
+            startingPrice = itemView.findViewById(R.id.starting_price);
+            availableFlight = itemView.findViewById(R.id.available_flight);
             placeImage = itemView.findViewById(R.id.place_image);
+            viewButton = itemView.findViewById(R.id.view_button);
         }
     }
 }

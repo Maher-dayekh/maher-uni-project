@@ -79,7 +79,7 @@ public class AdditionalImagesAdapter extends RecyclerView.Adapter<AdditionalImag
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Load images from URL instead of drawable resources
-        ImageLoader.loadImage(holder.imageView, imagesList.get(position));
+        ImageLoader.loadImage(context, holder.imageView, imagesList.get(position));
     }
 
     @Override

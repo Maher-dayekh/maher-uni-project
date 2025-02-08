@@ -125,7 +125,11 @@ package com.example.myproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -137,6 +141,8 @@ import com.example.myproject.model.Place;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -145,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
     private TopPlacesAdapter topPlacesAdapter;
     private List<Place> recentsList, topPlacesList;
     private DatabaseReference databaseReference;
+    private EditText searchEditText; // Add this
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,26 +187,68 @@ public class MainActivity extends AppCompatActivity {
         favoritesBookings.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, FavoritesBookingsActivity.class));
         });
+
+        searchEditText = findViewById(R.id.editText);
+
+        // Handle Enter key press
+        searchEditText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+            if (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                String query = searchEditText.getText().toString().trim();
+                if (!query.isEmpty()) {
+                    Intent intent = new Intent(MainActivity.this, AllPlacesActivity.class);
+                    intent.putExtra("search_query", query);
+                    startActivity(intent);
+                }
+                return true;
+            }
+            return false;
+        });
     }
 
     private void fetchPlaces() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                recentsList.clear();
-                topPlacesList.clear();
+                List<Place> allPlaces = new ArrayList<>();
 
+                // Step 1: Collect all places
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Place place = dataSnapshot.getValue(Place.class);
                     if (place != null) {
-                        recentsList.add(place); // Add all places to recents
-                        if (topPlacesList.size() < 5) { // Limit top places to 5
-                            topPlacesList.add(place);
-                        }
+                        allPlaces.add(place);
                     }
                 }
 
-                // Attach adapters AFTER fetching data
+                // Step 2: Sort & limit recentsList (Earliest availableFlight)
+                Collections.sort(allPlaces, new Comparator<Place>() {
+                    @Override
+                    public int compare(Place p1, Place p2) {
+                        return p1.getAvailableFlight().compareTo(p2.getAvailableFlight());
+                    }
+                });
+
+                recentsList.clear();
+                for (int i = 0; i < Math.min(5, allPlaces.size()); i++) {
+                    recentsList.add(allPlaces.get(i));
+                }
+
+// Step 3: Sort & limit topPlacesList (Highest startingPrice)
+                Collections.sort(allPlaces, new Comparator<Place>() {
+                    @Override
+                    public int compare(Place p1, Place p2) {
+                        double price1 = Double.parseDouble(p1.getStartingPrice().replace("$", ""));
+                        double price2 = Double.parseDouble(p2.getStartingPrice().replace("$", ""));
+                        return Double.compare(price2, price1); // Descending order
+                    }
+                });
+
+                topPlacesList.clear();
+                for (int i = 0; i < Math.min(5, allPlaces.size()); i++) {
+                    topPlacesList.add(allPlaces.get(i));
+                }
+
+
+                // Step 4: Attach adapters AFTER filtering
                 recentsAdapter = new RecentsAdapter(MainActivity.this, recentsList);
                 recentRecycler.setAdapter(recentsAdapter);
                 recentsAdapter.notifyDataSetChanged();
@@ -214,4 +264,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

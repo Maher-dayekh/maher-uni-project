@@ -139,7 +139,7 @@ public class TopPlacesAdapter extends RecyclerView.Adapter<TopPlacesAdapter.TopP
         holder.price.setText(place.getStartingPrice());
 
         // Load image from URL
-        ImageLoader.loadImage(holder.placeImage, place.getImage());
+        ImageLoader.loadImage(context, holder.placeImage, place.getImage());
 
         holder.itemView.setOnClickListener(view -> {
             Intent i = new Intent(context, DetailsActivity.class);

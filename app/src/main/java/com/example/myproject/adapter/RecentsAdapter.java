@@ -42,9 +42,8 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.RecentsV
         holder.countryName.setText(place.getCountry());
         holder.placeName.setText(place.getName());
         holder.price.setText(place.getStartingPrice());
-
         // Load image without external libraries
-        ImageLoader.loadImage(holder.placeImage, place.getImage());
+        ImageLoader.loadImage(context, holder.placeImage, place.getImage());
 
         holder.itemView.setOnClickListener(view -> {
             Intent i = new Intent(context, DetailsActivity.class);

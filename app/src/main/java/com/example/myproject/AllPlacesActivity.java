@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -44,6 +46,13 @@ public class AllPlacesActivity extends AppCompatActivity {
 
         fetchPlaces();
 
+        // Get search query from Intent (if available)
+        String query = getIntent().getStringExtra("search_query");
+        if (query != null && !query.isEmpty()) {
+            searchBar.setText(query);
+            filterPlaces(query);
+        }
+
         // Search feature
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,6 +65,21 @@ public class AllPlacesActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {}
+        });
+
+        ImageView profileImage = findViewById(R.id.navigate_to_profile);
+        profileImage.setOnClickListener(v -> {
+            startActivity(new Intent(AllPlacesActivity.this, ProfileActivity.class));
+        });
+
+        ImageView favoritesBookings = findViewById(R.id.navigate_to_favorites_bookings);
+        favoritesBookings.setOnClickListener(v -> {
+            startActivity(new Intent(AllPlacesActivity.this, FavoritesBookingsActivity.class));
+        });
+
+        ImageView home = findViewById(R.id.navigate_to_main);
+        home.setOnClickListener(v -> {
+            startActivity(new Intent(AllPlacesActivity.this, MainActivity.class));
         });
     }
 

@@ -40,22 +40,28 @@ public class AllPlacesAdapter extends RecyclerView.Adapter<AllPlacesAdapter.View
         holder.placeName.setText(place.getName());
         holder.country.setText(place.getCountry());
         holder.startingPrice.setText(place.getStartingPrice());
-        holder.availableFlight.setText("Flight: " + place.getAvailableFlight());
+        holder.availableFlight.setText(place.getAvailableFlight());
 
-        // Load image from URL
-        ImageLoader.loadImage(holder.placeImage, place.getImage());
+        // Load image without external libraries
+        ImageLoader.loadImage(context, holder.placeImage, place.getImage());
 
         holder.itemView.setOnClickListener(view -> {
-            Intent i = new Intent(context, DetailsActivity.class);
-            i.putExtra("place_name", place.getName());
-            i.putExtra("country_name", place.getCountry());
-            i.putExtra("price", place.getStartingPrice());
-            i.putExtra("image", place.getImage());
-            i.putExtra("available_flight", place.getAvailableFlight());
-            i.putExtra("description", place.getDescription());
-            i.putStringArrayListExtra("additional_images", new ArrayList<>(place.getAdditionalImages()));
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("place_id", place.getId());
+            intent.putExtra("place_name", place.getName());
+            intent.putExtra("country_name", place.getCountry());
+            intent.putExtra("price", place.getStartingPrice());
+            intent.putExtra("image", place.getImage());
+            intent.putExtra("available_flight", place.getAvailableFlight());
+            intent.putExtra("description", place.getDescription());
+            // Ensure additional images list is never null
+            if (place.getAdditionalImages() != null) {
+                intent.putStringArrayListExtra("additional_images", new ArrayList<>(place.getAdditionalImages()));
+            } else {
+                intent.putStringArrayListExtra("additional_images", new ArrayList<>()); // Empty list to prevent crash
+            }
 
-            context.startActivity(i);
+            context.startActivity(intent);
         });
     }
 

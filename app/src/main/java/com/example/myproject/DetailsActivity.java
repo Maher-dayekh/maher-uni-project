@@ -118,7 +118,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -188,7 +190,7 @@ public class DetailsActivity extends AppCompatActivity {
         descriptionTextView.setText(description);
 
         if (imageUrl != null) {
-            ImageLoader.loadImage(placeImageView, imageUrl);
+            ImageLoader.loadImage(this, placeImageView, imageUrl);
         }
 
         // Setup RecyclerView for additional images
@@ -209,6 +211,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Handle booking
         bookButton.setOnClickListener(v -> {
+            if (!isUserAuthenticated()) return;
             if (isBooked) {
                 showCancelBookingDialog();
             } else {
@@ -216,11 +219,12 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        // Handle Favorite Button Click
         favoriteButton = findViewById(R.id.favorite_button);
         checkFavoriteStatus();
 
-        // Handle Favorite Button Click
         favoriteButton.setOnClickListener(v -> {
+            if (!isUserAuthenticated()) return;
             if (isFavorite) {
                 removeFromFavorites();
             } else {
@@ -228,6 +232,25 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Check if the user is authenticated
+    private boolean isUserAuthenticated() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            Toast.makeText(this, "Please log in to continue", Toast.LENGTH_SHORT).show();
+            redirectToLogin();
+            return false;
+        }
+        return true;
+    }
+
+    // Redirect to Login Activity
+    private void redirectToLogin() {
+        Intent intent = new Intent(DetailsActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();  // Close current activity
     }
 
     // Check if the user has already booked this trip
@@ -274,6 +297,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     // Book the trip and save to Firebase
     private void bookTrip() {
+        if (!isUserAuthenticated()) return;
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
@@ -281,10 +306,14 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         Map<String, Object> bookingData = new HashMap<>();
-        bookingData.put("placeName", placeName);
+        bookingData.put("id", placeId);
+        bookingData.put("name", placeName);
         bookingData.put("country", country);
-        bookingData.put("price", price);
+        bookingData.put("startingPrice", price);
         bookingData.put("availableFlight", availableFlight);
+        bookingData.put("description", description);
+        bookingData.put("image", imageUrl);
+        bookingData.put("additionalImages", additionalImages);
 
         bookingsRef.child(user.getUid()).child(placeId).setValue(bookingData)
                 .addOnSuccessListener(aVoid -> {
@@ -297,6 +326,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     // Cancel the booking and remove from Firebase
     private void cancelBooking() {
+        if (!isUserAuthenticated()) return;
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) return;
 
@@ -338,10 +369,14 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         Map<String, Object> favoriteData = new HashMap<>();
-        favoriteData.put("placeName", placeName);
+        favoriteData.put("id", placeId);
+        favoriteData.put("name", placeName);
         favoriteData.put("country", country);
-        favoriteData.put("price", price);
-        favoriteData.put("imageUrl", imageUrl);
+        favoriteData.put("startingPrice", price);
+        favoriteData.put("availableFlight", availableFlight);
+        favoriteData.put("description", description);
+        favoriteData.put("image", imageUrl);
+        favoriteData.put("additionalImages", additionalImages);
 
         favoritesRef.child(user.getUid()).child(placeId).setValue(favoriteData)
                 .addOnSuccessListener(aVoid -> {

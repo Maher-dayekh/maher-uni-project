@@ -46,5 +46,6 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.database)
     implementation(libs.cardview)
-
+    implementation(libs.github.glide)
+    annotationProcessor(libs.compiler)
 }

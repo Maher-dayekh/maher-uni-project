@@ -129,6 +129,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myproject.adapter.AdditionalImagesAdapter;
+import com.example.myproject.utils.GmailSender;
 import com.example.myproject.utils.ImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -320,6 +321,9 @@ public class DetailsActivity extends AppCompatActivity {
                     isBooked = true;
                     bookButton.setText("Cancel Booking");
                     Toast.makeText(DetailsActivity.this, "Trip booked successfully!", Toast.LENGTH_SHORT).show();
+                    // Send Email Confirmation
+                    GmailSender.sendEmail(user.getEmail(), "Booking Confirmation",
+                            "You have successfully booked " + placeName + " in " + country + " for " + price + ".");
                 })
                 .addOnFailureListener(e -> Toast.makeText(DetailsActivity.this, "Failed to book trip", Toast.LENGTH_SHORT).show());
     }
@@ -336,6 +340,9 @@ public class DetailsActivity extends AppCompatActivity {
                     isBooked = false;
                     bookButton.setText("Start Booking Your Trip");
                     Toast.makeText(DetailsActivity.this, "Booking cancelled!", Toast.LENGTH_SHORT).show();
+                    GmailSender.// Send Email Cancellation
+                            sendEmail(user.getEmail(), "Booking Cancellation",
+                            "You have cancelled your booking for " + placeName + " in " + country + ".");
                 })
                 .addOnFailureListener(e -> Toast.makeText(DetailsActivity.this, "Failed to cancel booking", Toast.LENGTH_SHORT).show());
     }

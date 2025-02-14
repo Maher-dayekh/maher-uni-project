@@ -30,6 +30,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    packagingOptions {
+        exclude ("META-INF/NOTICE.md")
+        exclude ("META-INF/LICENSE.md")
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/NOTICE")
+    }
 }
 
 dependencies {
@@ -48,4 +55,6 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.github.glide)
     annotationProcessor(libs.compiler)
+    implementation (libs.android.mail)
+    implementation (libs.android.activation)
 }

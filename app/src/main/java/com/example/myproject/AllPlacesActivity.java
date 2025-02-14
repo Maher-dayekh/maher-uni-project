@@ -95,7 +95,15 @@ public class AllPlacesActivity extends AppCompatActivity {
                         placeList.add(place);
                     }
                 }
-                filteredList.addAll(placeList);
+
+                // Now that places are loaded, apply search filter (if any)
+                String query = getIntent().getStringExtra("search_query");
+                if (query != null && !query.isEmpty()) {
+                    filterPlaces(query);
+                } else {
+                    filteredList.addAll(placeList);
+                }
+
                 adapter.notifyDataSetChanged();
             }
 
@@ -103,6 +111,7 @@ public class AllPlacesActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+
 
     private void filterPlaces(String query) {
         filteredList.clear();

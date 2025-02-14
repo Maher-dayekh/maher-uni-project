@@ -126,6 +126,7 @@ package com.example.myproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -190,9 +191,20 @@ public class MainActivity extends AppCompatActivity {
 
         searchEditText = findViewById(R.id.editText);
 
-        // Handle Enter key press
+        // Placeholder disappears when clicked
+        searchEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                searchEditText.setHint("");
+            } else if (searchEditText.getText().toString().trim().isEmpty()) {
+                searchEditText.setHint("Search Destinations");
+            }
+        });
+
+        // Handle Enter key press (Search action)
         searchEditText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
-            if (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (event != null && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
                 String query = searchEditText.getText().toString().trim();
                 if (!query.isEmpty()) {
                     Intent intent = new Intent(MainActivity.this, AllPlacesActivity.class);
@@ -203,6 +215,19 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+//        // Handle Enter key press
+//        searchEditText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+//            if (event != null && event.getAction() == KeyEvent.ACTION_DOWN && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getKeyCode() == KeyEvent.KEYCODE_TAB)) {
+//                String query = searchEditText.getText().toString().trim();
+//                if (!query.isEmpty()) {
+//                    Intent intent = new Intent(MainActivity.this, AllPlacesActivity.class);
+//                    intent.putExtra("search_query", query);
+//                    startActivity(intent);
+//                }
+//                return true;
+//            }
+//            return false;
+//        });
     }
 
     private void fetchPlaces() {

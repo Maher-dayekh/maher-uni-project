@@ -114,29 +114,29 @@
 
         <ImageView
             android:id="@+id/navigate_to_home"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/home" />
 
         <ImageView
             android:id="@+id/navigate_to_profile"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/profileicon" />
 
         <ImageView
             android:id="@+id/navigate_to_places"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/flights" />
 
         <ImageView
             android:id="@+id/navigate_to_favorites_bookings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/hotel" />
 

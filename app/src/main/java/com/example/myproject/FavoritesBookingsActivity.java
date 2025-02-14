@@ -142,4 +142,6 @@ public class FavoritesBookingsActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+
+
 }
